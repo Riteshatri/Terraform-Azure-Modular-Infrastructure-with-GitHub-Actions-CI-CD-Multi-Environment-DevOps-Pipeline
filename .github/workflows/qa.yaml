@@ -1,0 +1,51 @@
+name: qa
+on:
+  push:
+    paths:
+      - 'environments/qa.tfvars'
+
+  workflow_dispatch:
+    inputs:
+      do_init:     { type: boolean, default: true,  description: "Run terraform init?" }
+      do_fmt:      { type: boolean, default: true,  description: "Run terraform fmt?" }
+      do_validate: { type: boolean, default: true,  description: "Run terraform validate?" }
+      do_plan:     { type: boolean, default: true,  description: "Run terraform plan?" }
+      do_apply:    { type: boolean, default: false, description: "Run terraform apply?" }
+      do_destroy:  { type: boolean, default: false, description: "Run terraform destroy?" }
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  call:
+    uses: ./.github/workflows/terraform-multi.yaml
+    with:
+      environment: qa
+      tfvars_file: environments/qa.tfvars
+      rgname: ritkargs
+      saname: ritkasas
+      scname: ritkascs
+      key: qa.tfstate
+
+      # runInit: true
+      # runFmt: true
+      # runValidate: true
+      # runPlan: true
+      # runApply: true
+      # runDestroy: false
+      
+      # 👇 Simple clear logic
+      # If push → only init/fmt/validate/plan true
+      # If manual → follow checkbox inputs
+      runInit:     ${{ github.event_name == 'push' || inputs.do_init }}
+      runFmt:      ${{ github.event_name == 'push' || inputs.do_fmt }}
+      runValidate: ${{ github.event_name == 'push' || inputs.do_validate }}
+      runPlan:     ${{ github.event_name == 'push' || inputs.do_plan }}
+      runApply:    ${{ github.event_name != 'push' && inputs.do_apply }}
+      runDestroy:  ${{ github.event_name != 'push' && inputs.do_destroy }}
+
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
