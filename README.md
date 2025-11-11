@@ -169,7 +169,7 @@ on:
 
 jobs:
   call:
-    uses: ./.github/workflows/terraform-multi(RunOnUbuntu).yaml
+    uses: ./.github/workflows/terraform-multi(runsOnSelfHosted).yaml
     with:
       environment: dev
       tfvars_file: environments/dev.tfvars
