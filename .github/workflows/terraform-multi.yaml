@@ -69,14 +69,21 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Azure Login
-        uses: Azure/login@v2.3.0
+      # - name: Azure Login
+      #   uses: Azure/login@v2.3.0
+      #   with:
+      #     client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      #     tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      #     subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      
-          
+
+
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3
         # with:
