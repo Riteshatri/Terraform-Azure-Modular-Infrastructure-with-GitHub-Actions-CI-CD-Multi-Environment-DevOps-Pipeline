@@ -134,8 +134,8 @@ jobs:
       run:
         working-directory: infra
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v5.0.0   # 👈 ADD THIS
+      - name: Checkout
+        uses: actions/checkout@v5.0.0   # 👈 ADD THIS
         
       - name: Terraform fmt
         run: terraform fmt 
