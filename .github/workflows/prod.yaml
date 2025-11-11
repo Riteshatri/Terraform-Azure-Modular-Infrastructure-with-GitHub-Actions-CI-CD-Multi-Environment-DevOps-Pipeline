@@ -33,7 +33,7 @@ permissions:
 
 jobs:
   call:
-    uses: ./.github/workflows/terraform-multi.yaml
+    uses: ./.github/workflows/terraform-multi(RunOnUbuntu).yaml
     with:
       environment: prod
       tfvars_file: environments/prod.tfvars
