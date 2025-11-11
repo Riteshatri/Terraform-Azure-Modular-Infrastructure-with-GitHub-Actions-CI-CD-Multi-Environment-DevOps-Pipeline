@@ -136,7 +136,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0   # 👈 ADD THIS
-        
+          
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6   # 👈 same version as init job
+
       - name: Terraform fmt
         run: terraform fmt 
 
