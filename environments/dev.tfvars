@@ -23,8 +23,7 @@ vnets = {
       subnet2 = {
         subnet_name             = "dusrasubnet"
         subnet_address_prefixes = ["10.0.1.0/25"] # 128 addresses
-      }
-      
+      }      
       subnetab = {
         subnet_name             = "AzureBastionSubnet"
         subnet_address_prefixes = ["10.0.1.128/26"] # 10.0.0.128/26-24 - 64 to 256 addresses   
